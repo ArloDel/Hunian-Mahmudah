@@ -7,6 +7,7 @@ const Navbar = () => {
       <div className="space-x-6">
         <Link to="/" className="hover:text-blue-600">Cari Kost</Link>
         <Link to="/login" className="bg-blue-600 text-white px-4 py-2 rounded-lg">Login</Link>
+        
       </div>
     </nav>
   );

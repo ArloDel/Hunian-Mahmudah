@@ -1,16 +1,20 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8000/api', // Sesuaikan dengan URL Laravel kamu
+    baseURL: 'http://localhost:8000/api',
 });
 
-// Menambahkan token otomatis jika user sudah login
-api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+// Interceptor untuk menangani Token Expired (Khas JWT)
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response && error.response.status === 401) {
+            // Jika token expired atau tidak valid, paksa logout
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+        }
+        return Promise.reject(error);
     }
-    return config;
-});
+);
 
 export default api;

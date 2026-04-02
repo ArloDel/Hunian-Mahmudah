@@ -11,11 +11,9 @@ Route::get('/rooms', [RoomController::class, 'index']);
 Route::get('/rooms/{id}', [RoomController::class, 'show']);
 
 // Protected Routes (Harus Login)
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', function (Request $request) {
-        $request->user()->currentAccessToken()->delete();
-        return response()->json(['message' => 'Logged out']);
-    });
+Route::middleware('auth:api')->group(function () {
+   Route::get('/me', [AuthController::class, 'me']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 
     // Route untuk booking akan diletakkan di sini nanti
 });
