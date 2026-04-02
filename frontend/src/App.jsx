@@ -17,8 +17,6 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navbar muncul di semua halaman */}
-      <Navbar /> 
-
       <Routes>
         {/* rute publik */}
         <Route path="/" element={<Home />} />
