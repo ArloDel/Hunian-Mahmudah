@@ -1,6 +1,13 @@
+import { useRef } from "react";
 import { Home, MessageCircle, Phone, Mail, MapPin, Clock } from "lucide-react";
+import { useSoftPulse } from "../hooks/useAnime";
 
 const Footer = () => {
+  const whatsappRef = useRef(null);
+
+  // Tombol WhatsApp berdenyut lembut — hangat dan mengundang sapa
+  useSoftPulse(whatsappRef);
+
   return (
     <footer className="bg-cocoa text-cream/80 py-14 md:py-16 px-6 md:px-8">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -74,6 +81,7 @@ const Footer = () => {
             Ibu kost siap bantu — biasanya dibalas dalam satu jam.
           </p>
           <a
+            ref={whatsappRef}
             href="https://wa.me/628123456789"
             target="_blank"
             rel="noreferrer"

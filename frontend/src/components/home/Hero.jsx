@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { MapPin, Flower2, Clock, Search, ArrowRight } from "lucide-react";
+import { useEntrance, useParallax } from "../../hooks/useAnime";
 
 // Ilustrasi tangan sederhana: kamar nyaman ala Tema B (jendela, kasur, lampu, tanaman)
 const CozyRoomIllustration = () => (
@@ -51,7 +52,12 @@ const CozyRoomIllustration = () => (
 );
 
 const Hero = () => {
+  const sectionRef = useRef(null);
   const [location, setLocation] = useState("");
+
+  // Animasi masuk lembut (berjalan saat halaman dibuka) + parallax scroll
+  useEntrance(sectionRef, { selector: "[data-entrance]" });
+  useParallax(sectionRef, { enter: "start start" });
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -59,31 +65,38 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative overflow-hidden">
-      {/* Bentuk organik lembut di latar */}
-      <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-sage-tint/70 blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-32 -left-24 w-96 h-96 rounded-full bg-terracotta-tint/60 blur-3xl pointer-events-none" />
+    <section ref={sectionRef} className="relative overflow-hidden">
+      {/* Bentuk organik lembut di latar — bergerak parallax saat scroll */}
+      <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-sage-tint/70 blur-3xl pointer-events-none" data-parallax="170" />
+      <div className="absolute -bottom-32 -left-24 w-96 h-96 rounded-full bg-terracotta-tint/60 blur-3xl pointer-events-none" data-parallax="-130" />
 
       <div className="relative max-w-6xl mx-auto px-6 md:px-8 py-14 md:py-24 grid md:grid-cols-2 gap-14 md:gap-10 items-center">
         {/* Kolom sapaan + pencarian */}
         <div className="text-center md:text-left">
-          <span className="inline-flex items-center gap-2 bg-sage-tint text-olive px-4 py-1.5 rounded-full text-sm font-semibold border border-sage/40">
+          <span
+            data-entrance
+            className="inline-flex items-center gap-2 bg-sage-tint text-olive px-4 py-1.5 rounded-full text-sm font-semibold border border-sage/40"
+          >
             <Flower2 className="w-4 h-4" />
             Selamat datang, cari rumah keduamu
           </span>
 
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-[3.4rem] font-semibold leading-[1.15] text-cocoa mt-6">
+          <h1
+            data-entrance
+            className="font-serif text-4xl md:text-5xl lg:text-[3.4rem] font-semibold leading-[1.15] text-cocoa mt-6"
+          >
             Pulang ke Tempat yang{" "}
             <span className="italic text-terracotta">Terasa seperti Rumah</span>
           </h1>
 
-          <p className="text-mocha text-lg leading-relaxed mt-5 max-w-lg mx-auto md:mx-0">
+          <p data-entrance className="text-mocha text-lg leading-relaxed mt-5 max-w-lg mx-auto md:mx-0">
             Kamar-kamar nyaman yang ditinggali dengan hati — bersih, aman, dan
             ibu kost yang ramah. Cerita hangatmu dimulai di sini.
           </p>
 
           {/* Pencarian lokasi */}
           <form
+            data-entrance
             onSubmit={handleSearch}
             className="mt-8 flex items-center gap-2 bg-white/80 border border-sand-deep rounded-full p-2 pl-5 shadow-soft max-w-lg mx-auto md:mx-0 focus-within:border-terracotta transition"
           >
@@ -106,7 +119,7 @@ const Hero = () => {
           </form>
 
           {/* Label suasana sebagai chip cepat */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-6 text-sm font-semibold">
+          <div data-entrance className="flex flex-wrap justify-center md:justify-start gap-3 mt-6 text-sm font-semibold">
             {["Tenang", "Khusus putri", "Dekat kampus", "Dekat taman"].map((chip) => (
               <span
                 key={chip}
@@ -118,34 +131,47 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Kolom suasana kamar + profil ibu kost */}
+        {/* Kolom suasana kamar + profil ibu kost (berlapis parallax) */}
         <div className="relative">
-          <div className="bg-sand rounded-[2rem] border border-sand-deep p-6 md:p-10 shadow-lifted">
-            <CozyRoomIllustration />
-            <p className="text-center text-mocha text-sm mt-4 font-semibold">
-              Suasana kamar yang ditinggali — hangat dan tenang
-            </p>
+          <div data-parallax="70">
+            <div
+              data-entrance
+              className="bg-sand rounded-[2rem] border border-sand-deep p-6 md:p-10 shadow-lifted"
+            >
+              <CozyRoomIllustration />
+              <p className="text-center text-mocha text-sm mt-4 font-semibold">
+                Suasana kamar yang ditinggali — hangat dan tenang
+              </p>
+            </div>
           </div>
 
           {/* Profil ibu kost: sapaan + respons rata-rata */}
-          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 md:left-8 md:translate-x-0 bg-white rounded-3xl border border-sand-deep shadow-lifted px-5 py-4 flex items-center gap-4 w-max">
-            <span className="flex items-center justify-center w-12 h-12 rounded-full bg-terracotta-tint text-terracotta-deep font-serif font-semibold text-xl border border-terracotta/30">
-              S
-            </span>
-            <div>
-              <p className="font-bold text-cocoa leading-tight">Ibu Kost Sri</p>
-              <p className="text-mocha text-xs sm:text-sm flex items-center gap-1.5 mt-0.5">
-                <Clock className="w-3.5 h-3.5 text-olive" />
-                Respons rata-rata &lt; 1 jam
-              </p>
-            </div>
-            <a
-              href="#katalog"
-              aria-label="Lihat kamar"
-              className="flex items-center justify-center w-10 h-10 rounded-full bg-sage-tint hover:bg-sage text-cocoa hover:text-cream transition border border-sage/40"
+          <div
+            data-parallax="150"
+            className="absolute -bottom-8 inset-x-0 md:inset-x-auto md:left-8 flex justify-center md:justify-start pointer-events-none"
+          >
+            <div
+              data-entrance
+              className="pointer-events-auto bg-white rounded-3xl border border-sand-deep shadow-lifted px-5 py-4 flex items-center gap-4 w-max"
             >
-              <ArrowRight className="w-4 h-4" />
-            </a>
+              <span className="flex items-center justify-center w-12 h-12 rounded-full bg-terracotta-tint text-terracotta-deep font-serif font-semibold text-xl border border-terracotta/30">
+                S
+              </span>
+              <div>
+                <p className="font-bold text-cocoa leading-tight">Ibu Kost Sri</p>
+                <p className="text-mocha text-xs sm:text-sm flex items-center gap-1.5 mt-0.5">
+                  <Clock className="w-3.5 h-3.5 text-olive" />
+                  Respons rata-rata &lt; 1 jam
+                </p>
+              </div>
+              <a
+                href="#katalog"
+                aria-label="Lihat kamar"
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-sage-tint hover:bg-sage text-cocoa hover:text-cream transition border border-sage/40"
+              >
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BedDouble } from "lucide-react";
 import api from "../api/axios";
+import { useScrollReveal } from "../hooks/useAnime";
 import Hero from "../components/home/Hero";
 import Testimonials from "../components/home/Testimonials";
 import RoomCard from "../components/home/RoomCard";
@@ -10,6 +11,10 @@ import Footer from "../components/Footer";
 const Home = () => {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const catalogRef = useRef(null);
+
+  // Judul katalog muncul lembut saat digulir (katalog selalu dirender)
+  useScrollReveal(catalogRef, { selector: "[data-reveal]" });
 
   useEffect(() => {
     api
@@ -28,9 +33,9 @@ const Home = () => {
       <Testimonials />
 
       {/* 3. Kartu kost dengan label suasana */}
-      <section id="katalog" className="py-16 md:py-24 px-6 md:px-8">
+      <section id="katalog" ref={catalogRef} className="py-16 md:py-24 px-6 md:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
+          <div data-reveal className="text-center mb-12">
             <h2 className="font-serif text-3xl md:text-4xl font-semibold text-cocoa">
               Kamar yang Menunggu Kamu{" "}
               <span className="italic text-terracotta">Pulang</span>

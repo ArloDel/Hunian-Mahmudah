@@ -1,4 +1,6 @@
+import { useRef } from "react";
 import { Star, Quote } from "lucide-react";
+import { useScrollReveal, useParallax } from "../../hooks/useAnime";
 
 // Cerita penghuni: testimoni hangat dengan foto/avatar (PRD Tema B, komponen kunci)
 const STORIES = [
@@ -26,10 +28,29 @@ const STORIES = [
 ];
 
 const Testimonials = () => {
+  const sectionRef = useRef(null);
+
+  // Kartu cerita muncul lembut saat masuk viewport + blob dekoratif berparallax
+  useScrollReveal(sectionRef, { selector: "[data-reveal]" });
+  useParallax(sectionRef);
+
   return (
-    <section className="bg-sand py-16 md:py-20 px-6 md:px-8 mt-16 md:mt-24 texture-dots">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden bg-sand py-16 md:py-20 px-6 md:px-8 mt-16 md:mt-24 texture-dots"
+    >
+      {/* Blob organik lembut — bergerak parallax dengan kecepatan berbeda */}
+      <div
+        className="absolute -top-16 -left-20 w-72 h-72 rounded-full bg-terracotta-tint/50 blur-3xl pointer-events-none"
+        data-parallax="-70"
+      />
+      <div
+        className="absolute -bottom-24 -right-16 w-80 h-80 rounded-full bg-sage-tint/60 blur-3xl pointer-events-none"
+        data-parallax="90"
+      />
+
+      <div className="relative max-w-6xl mx-auto">
+        <div data-reveal className="text-center mb-12">
           <h2 className="font-serif text-3xl md:text-4xl font-semibold text-cocoa">
             Cerita Penghuni
           </h2>
@@ -44,7 +65,8 @@ const Testimonials = () => {
           {STORIES.map((story) => (
             <article
               key={story.name}
-              className="relative bg-cream rounded-3xl border border-sand-deep p-7 shadow-soft hover:shadow-lifted transition duration-300"
+              data-reveal
+              className="relative bg-cream rounded-homey border border-sand-deep p-7 shadow-soft hover:shadow-lifted transition duration-300"
             >
               <Quote className="w-8 h-8 text-terracotta/40 absolute top-6 right-6" />
 
