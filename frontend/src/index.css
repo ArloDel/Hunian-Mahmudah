@@ -1,1 +1,62 @@
 @import "tailwindcss";
+
+/* ============================================
+   Tema B: Hangat & Homey — Design Tokens
+   Palet: krem, pasir, terakota, sage, cokelat
+   ============================================ */
+@theme {
+  /* Latar */
+  --color-cream: #fbf6ee; /* latar utama */
+  --color-sand: #f1e7d8; /* latar sekunder */
+  --color-sand-deep: #e7dbc5; /* garis/batas lembut */
+
+  /* Aksen */
+  --color-terracotta: #c4673f; /* aksen utama (PRD) */
+  --color-terracotta-dark: #a85432; /* tombol utama — kontras AA dgn teks krem */
+  --color-terracotta-deep: #8f4526; /* hover tombol */
+  --color-terracotta-tint: #f4dfd3; /* latar tint terakota */
+
+  /* Aksen sekunder */
+  --color-sage: #8fa58a; /* hijau sage */
+  --color-sage-tint: #e8efe5; /* latar tint sage */
+  --color-olive: #5e7f4d; /* sukses / zaitun */
+
+  /* Teks */
+  --color-cocoa: #3b2f2a; /* teks utama — cokelat tua */
+  --color-mocha: #7a6a60; /* teks sekunder — cokelat sedang */
+
+  /* Tipografi: Fraunces (judul) + Nunito (isi) */
+  --font-serif: "Fraunces", "Georgia", serif;
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+
+  /* Sudut sangat membulat (16–24px) */
+  --radius-homey: 1.5rem;
+
+  /* Bayangan lembut bernuansa hangat */
+  --shadow-soft: 0 6px 24px rgba(59, 47, 42, 0.08);
+  --shadow-lifted: 0 12px 32px rgba(59, 47, 42, 0.12);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream text-cocoa font-sans antialiased;
+    line-height: 1.6; /* jarak baris longgar sesuai PRD */
+  }
+
+  ::selection {
+    @apply bg-terracotta text-cream;
+  }
+}
+
+/* Tekstur halus: pola titik organik sebagai pemisah bagian */
+@utility texture-dots {
+  background-image: radial-gradient(
+    var(--color-sand-deep) 1.1px,
+    transparent 1.1px
+  );
+  background-size: 22px 22px;
+}
