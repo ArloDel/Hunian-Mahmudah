@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
-import { BedDouble, Wifi, Wind, Bath, ArrowRight } from "lucide-react";
+import { BedDouble, Wifi, Wind, Bath, MessageCircle } from "lucide-react";
 import { useScrollReveal, useParallax } from "../../hooks/useAnime";
+import { buildRoomInquiryUrl } from "../../lib/whatsapp";
 
 // Label suasana berbentuk pil (PRD Tema B: kartu kost dengan label suasana)
 const VIBES = ["Tenang", "Dekat taman", "Khusus putri", "Sejuk"];
@@ -109,11 +110,16 @@ const RoomCard = ({ room, index = 0 }) => {
               <p className="text-mocha text-xs">per bulan</p>
             </div>
 
-            {/* Tombol utama Tema B: terakota, teks krem, "Cek Kamarnya" */}
-            <button className="flex items-center gap-1.5 bg-terracotta-dark hover:bg-terracotta-deep text-cream font-bold px-5 py-2.5 rounded-full transition">
-              Cek Kamarnya
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            {/* Tombol utama Tema B: terakota, teks krem, "Pesan via WhatsApp" */}
+            <a
+              href={buildRoomInquiryUrl(room)}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1.5 bg-terracotta-dark hover:bg-terracotta-deep text-cream font-bold px-5 py-2.5 rounded-full transition"
+            >
+              Pesan via WhatsApp
+              <MessageCircle className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </div>
