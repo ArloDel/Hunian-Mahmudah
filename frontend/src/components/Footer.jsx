@@ -41,11 +41,6 @@ const Footer = () => {
                 Cari Kamar
               </a>
             </li>
-            <li>
-              <a href="/login" className="hover:text-terracotta transition">
-                Masuk
-              </a>
-            </li>
           </ul>
         </div>
 
