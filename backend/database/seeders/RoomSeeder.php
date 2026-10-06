@@ -55,6 +55,7 @@ class RoomSeeder extends Seeder
                 'image' => 'foto-kost/kamar-07.jpeg',
                 'price' => 2000000,
                 'description' => 'Kamar paling nyaman di lantai dua: pemandangan pohon, AC, dan sudut baca kecil di dekat jendela.',
+                'is_available' => false,
             ],
         ];
 

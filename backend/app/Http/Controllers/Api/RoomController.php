@@ -8,11 +8,13 @@ use App\Models\Room;
 
 class RoomController extends Controller
 {
-    public function index() {
-    return response()->json(Room::where('is_available', true)->get());
-}
+    public function index()
+    {
+        return response()->json(Room::orderByDesc('is_available')->get());
+    }
 
-public function show($id) {
-    return response()->json(Room::findOrFail($id));
-}
+    public function show($id)
+    {
+        return response()->json(Room::findOrFail($id));
+    }
 }
