@@ -9,3 +9,8 @@ export const buildRoomInquiryUrl = (room) => {
   const message = `Halo Ibu Kost, saya tertarik dengan Kamar ${roomNumber} di Kost-On (Rp ${price}/bulan). Apakah kamar ini masih tersedia? Terima kasih.`;
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 };
+
+export const buildGeneralInquiryUrl = (customText) => {
+  const message = customText ?? "Halo Ibu Kost, saya ingin bertanya tentang kamar kost yang tersedia. Terima kasih.";
+  return `https://wa.me/${getOwnerWhatsAppNumber()}?text=${encodeURIComponent(message)}`;
+};

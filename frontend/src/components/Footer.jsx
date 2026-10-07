@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { Home, MessageCircle, Phone, Mail, MapPin, Clock } from "lucide-react";
 import { useSoftPulse } from "../hooks/useAnime";
+import { buildGeneralInquiryUrl } from "../lib/whatsapp";
 
 const Footer = () => {
   const whatsappRef = useRef(null);
@@ -77,7 +78,7 @@ const Footer = () => {
           </p>
           <a
             ref={whatsappRef}
-            href="https://wa.me/628123456789"
+            href={buildGeneralInquiryUrl()}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2.5 bg-olive hover:bg-sage text-cream font-bold px-6 py-3.5 rounded-full transition shadow-lifted border border-cream/10"

@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { ShieldCheck, Sparkles, Coffee, MessageCircle } from "lucide-react";
 import { useScrollReveal } from "../../hooks/useAnime";
+import { buildGeneralInquiryUrl } from "../../lib/whatsapp";
 
 // "Kenapa terasa seperti di rumah" — keamanan, kebersihan, ibu kost ramah (PRD Tema B)
 const REASONS = [
@@ -82,7 +83,7 @@ const About = () => {
           </div>
           <a
             data-reveal
-            href="https://wa.me/628123456789"
+            href={buildGeneralInquiryUrl()}
             target="_blank"
             rel="noreferrer"
             className="bg-sage-tint hover:bg-sage rounded-homey border border-sage/40 p-6 flex items-center justify-center gap-3 transition group"
