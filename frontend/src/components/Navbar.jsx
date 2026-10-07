@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Home, Heart } from "lucide-react";
+import { Home, Heart, MessageCircle } from "lucide-react";
+import { buildGeneralInquiryUrl } from "../lib/whatsapp";
 
 const Navbar = () => {
   return (
@@ -15,7 +16,7 @@ const Navbar = () => {
       </Link>
 
       {/* Bagian Menu Navigasi */}
-      <div className="flex items-center gap-6 font-semibold text-[15px]">
+      <div className="flex items-center gap-4 sm:gap-6 font-semibold text-[15px]">
         <Link
           to="/"
           className="flex items-center gap-1.5 text-mocha hover:text-terracotta transition"
@@ -23,6 +24,15 @@ const Navbar = () => {
           <Heart className="w-4 h-4" />
           Cari Kamar
         </Link>
+        <a
+          href={buildGeneralInquiryUrl()}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-1.5 bg-olive text-cream px-4 py-2 rounded-full hover:bg-sage transition shadow-sm"
+        >
+          <MessageCircle className="w-4 h-4" />
+          <span className="hidden sm:inline">Tanya Ibu Kost</span>
+        </a>
       </div>
     </nav>
   );
