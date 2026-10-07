@@ -51,7 +51,7 @@ const CozyRoomIllustration = () => (
   </svg>
 );
 
-const Hero = () => {
+const Hero = ({ onSearch }) => {
   const sectionRef = useRef(null);
   const [location, setLocation] = useState("");
 
@@ -61,6 +61,9 @@ const Hero = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
+    if (onSearch) {
+      onSearch(location);
+    }
     document.getElementById("katalog")?.scrollIntoView({ behavior: "smooth" });
   };
 

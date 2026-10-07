@@ -11,6 +11,7 @@ import Footer from "../components/Footer";
 const Home = () => {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
   const catalogRef = useRef(null);
 
   // Judul katalog muncul lembut saat digulir (katalog selalu dirender)
@@ -24,10 +25,19 @@ const Home = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredRooms = normalizedSearch
+    ? rooms.filter((room) => {
+        const matchNumber = room.room_number?.toLowerCase().includes(normalizedSearch);
+        const matchDescription = room.description?.toLowerCase().includes(normalizedSearch);
+        return matchNumber || matchDescription;
+      })
+    : rooms;
+
   return (
     <div className="bg-cream min-h-screen text-cocoa">
       {/* 1. Hero: sapaan ramah + pencarian */}
-      <Hero />
+      <Hero onSearch={setSearchTerm} />
 
       {/* 2. Cerita penghuni */}
       <Testimonials />
@@ -65,13 +75,7 @@ const Home = () => {
                 </div>
               ))}
             </div>
-          ) : rooms.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {rooms.map((room, index) => (
-                <RoomCard key={room.id} room={room} index={index} />
-              ))}
-            </div>
-          ) : (
+          ) : rooms.length === 0 ? (
             // Keadaan kosong dengan nada hangat
             <div className="max-w-md mx-auto bg-white rounded-homey border border-sand-deep p-10 text-center shadow-soft">
               <span className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sage-tint border border-sage/40 mb-5">
@@ -83,6 +87,25 @@ const Home = () => {
               <p className="text-mocha text-sm leading-relaxed mt-2">
                 Ibu kost sedang merapikan beberapa kamar. Coba kembali lagi
                 nanti, ya.
+              </p>
+            </div>
+          ) : filteredRooms.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {filteredRooms.map((room, index) => (
+                <RoomCard key={room.id} room={room} index={index} />
+              ))}
+            </div>
+          ) : (
+            // Hasil pencarian tidak ada yang cocok
+            <div className="max-w-md mx-auto bg-white rounded-homey border border-sand-deep p-10 text-center shadow-soft">
+              <span className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-terracotta-tint border border-terracotta/30 mb-5">
+                <BedDouble className="w-7 h-7 text-terracotta-deep" strokeWidth={1.8} />
+              </span>
+              <h3 className="font-serif text-xl font-semibold text-cocoa">
+                Tidak ada kamar yang cocok
+              </h3>
+              <p className="text-mocha text-sm leading-relaxed mt-2">
+                Coba kata kunci lain, atau tanya Ibu Kost langsung.
               </p>
             </div>
           )}
